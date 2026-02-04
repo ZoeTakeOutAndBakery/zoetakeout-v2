@@ -1,0 +1,21 @@
+---
+const { hours } = Astro.props;
+---
+<section id="hours" class="py-16 bg-section-bg">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-10">
+      <h2 class="text-3xl md:text-4xl font-bold text-primary mb-3">Hours</h2>
+      <p class="text-muted-foreground text-lg">Visit us for fresh meals and baked goods.</p>
+    </div>
+    <div class="max-w-3xl mx-auto bg-background rounded-2xl shadow-[var(--card-shadow)] p-6 md:p-8">
+      <div class="grid gap-4">
+        {(hours || []).map((entry) => (
+          <div class="flex items-center justify-between border-b border-border pb-3 last:border-b-0 last:pb-0">
+            <span class="font-semibold text-foreground">{entry.label}</span>
+            <span class="text-muted-foreground">{entry.open} - {entry.close}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
