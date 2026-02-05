@@ -1,0 +1,82 @@
+---
+const { contact } = Astro.props;
+const mapUrl = contact?.mapEmbedUrl;
+---
+<section id="contact" class="py-16 bg-section-bg">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-10">
+      <h2 class="text-3xl md:text-4xl font-bold text-primary mb-3">Contact Us</h2>
+      <p class="text-muted-foreground text-lg">We would love to hear from you.</p>
+    </div>
+
+    <div class="grid gap-8 lg:grid-cols-2">
+      <div class="space-y-6">
+        <div class="rounded-2xl border border-border bg-background shadow-[var(--card-shadow)] p-6">
+          <h3 class="text-xl font-semibold text-primary mb-4">Get in Touch</h3>
+          <div class="space-y-3 text-muted-foreground">
+            {contact?.contactPhone ? (
+              <p>
+                <span class="font-semibold text-foreground">Phone:</span> {contact.contactPhone}
+              </p>
+            ) : null}
+            {contact?.contactEmail ? (
+              <p>
+                <span class="font-semibold text-foreground">Email:</span> {contact.contactEmail}
+              </p>
+            ) : null}
+            {contact?.addressLine1 ? (
+              <p>
+                <span class="font-semibold text-foreground">Address:</span> {contact.addressLine1}
+                {contact.addressLine2 ? `, ${contact.addressLine2}` : ""}
+              </p>
+            ) : null}
+          </div>
+
+          {contact?.socialLinks?.length ? (
+            <div class="mt-6 flex flex-wrap gap-3">
+              {contact.socialLinks.map((link) => (
+                <a
+                  href={link.url}
+                  target="_blank"
+                  rel="noreferrer"
+                  class="inline-flex items-center justify-center rounded-full border border-border px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-secondary"
+                >
+                  {link.platform}
+                </a>
+              ))}
+            </div>
+          ) : null}
+        </div>
+
+        <div class="rounded-2xl border border-border bg-background shadow-[var(--card-shadow)] p-6">
+          <h3 class="text-xl font-semibold text-primary mb-4">Catering & Events</h3>
+          <p class="text-muted-foreground mb-4">
+            Planning a special event? We cater weddings, birthdays, corporate events, and more.
+          </p>
+          {contact?.contactPhone ? (
+            <a
+              href={`tel:${contact.contactPhone}`}
+              class="inline-flex items-center justify-center rounded-md bg-accent px-4 py-2 text-sm font-semibold text-accent-foreground transition-colors hover:bg-accent/90"
+            >
+              Call for Catering
+            </a>
+          ) : null}
+        </div>
+      </div>
+
+      <div class="rounded-2xl border border-border bg-background shadow-[var(--card-shadow)] overflow-hidden min-h-[320px]">
+        {mapUrl ? (
+          <iframe
+            title="Map"
+            src={mapUrl}
+            class="w-full h-full min-h-[320px]"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          ></iframe>
+        ) : (
+          <div class="w-full h-full min-h-[320px] bg-secondary"></div>
+        )}
+      </div>
+    </div>
+  </div>
+</section>

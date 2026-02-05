@@ -1,0 +1,111 @@
+---
+const { contactPhone } = Astro.props;
+const webhookUrl = "https://primary-production-cd93.up.railway.app/webhook-test/7dc2b384-0b00-483f-94aa-7b0cc5c4f5ec";
+const eventTypes = [
+  "Wedding",
+  "Funeral",
+  "Birthday Party",
+  "Corporate Event",
+  "Other Event",
+];
+---
+<section id="reservations" class="py-16 bg-background">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl md:text-4xl font-bold text-primary mb-4">Event Catering & Reservations</h2>
+      <p class="text-muted-foreground text-lg max-w-3xl mx-auto">
+        Let us make your special occasion memorable with our delicious catering services.
+      </p>
+    </div>
+
+    <div class="grid lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
+      <div class="space-y-6">
+        <div class="rounded-2xl border border-border bg-background shadow-[var(--card-shadow)] p-6">
+          <h3 class="text-2xl font-semibold text-primary mb-4">We Cater For</h3>
+          <ul class="grid sm:grid-cols-2 gap-3 text-muted-foreground">
+            {eventTypes.map((type) => (
+              <li class="rounded-lg border border-border px-3 py-2 bg-warm-white text-sm font-medium text-foreground">
+                {type}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div class="rounded-2xl border border-border bg-accent/5 shadow-[var(--card-shadow)] p-6 text-center">
+          <h4 class="text-xl font-semibold text-primary mb-2">Prefer to Call?</h4>
+          <p class="text-muted-foreground mb-4">
+            Speak directly with our catering team for immediate assistance.
+          </p>
+          {contactPhone ? (
+            <a
+              href={`tel:${contactPhone}`}
+              class="inline-flex items-center justify-center rounded-md bg-accent px-4 py-2 text-sm font-semibold text-accent-foreground transition-colors hover:bg-accent/90"
+            >
+              Call {contactPhone}
+            </a>
+          ) : null}
+        </div>
+      </div>
+
+      <form
+        class="rounded-2xl border border-border bg-background shadow-[var(--card-shadow)] p-6 space-y-4"
+        action={webhookUrl}
+        method="POST"
+      >
+        <h3 class="text-xl font-semibold text-primary">Request Event Catering</h3>
+        <p class="text-muted-foreground">
+          Fill out the form below and we will contact you to confirm your event details.
+        </p>
+
+        <div class="grid md:grid-cols-2 gap-4">
+          <div class="space-y-2">
+            <label class="text-sm font-medium text-foreground" for="name">Full Name *</label>
+            <input class="w-full rounded-md border border-border px-3 py-2" id="name" name="name" required />
+          </div>
+          <div class="space-y-2">
+            <label class="text-sm font-medium text-foreground" for="phone">Phone Number *</label>
+            <input class="w-full rounded-md border border-border px-3 py-2" id="phone" name="phone" type="tel" required />
+          </div>
+        </div>
+
+        <div class="space-y-2">
+          <label class="text-sm font-medium text-foreground" for="email">Email Address *</label>
+          <input class="w-full rounded-md border border-border px-3 py-2" id="email" name="email" type="email" required />
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-4">
+          <div class="space-y-2">
+            <label class="text-sm font-medium text-foreground" for="eventType">Event Type *</label>
+            <select class="w-full rounded-md border border-border px-3 py-2" id="eventType" name="eventType" required>
+              <option value="">Select event type</option>
+              {eventTypes.map((type) => (
+                <option value={type}>{type}</option>
+              ))}
+            </select>
+          </div>
+          <div class="space-y-2">
+            <label class="text-sm font-medium text-foreground" for="guests">Number of Guests</label>
+            <input class="w-full rounded-md border border-border px-3 py-2" id="guests" name="guests" type="number" />
+          </div>
+        </div>
+
+        <div class="space-y-2">
+          <label class="text-sm font-medium text-foreground" for="date">Preferred Date</label>
+          <input class="w-full rounded-md border border-border px-3 py-2" id="date" name="date" type="date" />
+        </div>
+
+        <div class="space-y-2">
+          <label class="text-sm font-medium text-foreground" for="details">Event Details</label>
+          <textarea class="w-full rounded-md border border-border px-3 py-2" id="details" name="details" rows="4"></textarea>
+        </div>
+
+        <button
+          type="submit"
+          class="w-full inline-flex items-center justify-center rounded-md bg-accent px-4 py-2 text-sm font-semibold text-accent-foreground transition-colors hover:bg-accent/90"
+        >
+          Submit Reservation Request
+        </button>
+      </form>
+    </div>
+  </div>
+</section>
